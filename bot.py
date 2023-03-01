@@ -42,7 +42,23 @@ class QuoteBot(Bot):
 
 
 class YoutubeBot(Bot):
-    pass
+    def _message_handler(self, update, context):
+        user_message = update.message.text
+
+        # Check if the message is a valid YouTube video name
+        #if 'youtube.com/' in user_message or 'youtu.be/' in user_message:
+        # Directly download the video if a valid URL is provided
+            #with YoutubeDL() as ydl:
+                #video_file = ydl.extract_info(user_message, download=True)
+                #video_path = ydl.prepare_filename(video_file)
+        #else:
+        # Otherwise, search for the video on YouTube using the search_download_youtube_video() function
+        videos = search_download_youtube_video(user_message)
+        video_path = videos[0]  # Download the first video returned by the search
+
+        # Send the video to the user
+
+        self.send_video(update, context, video_path)
 
 
 if __name__ == '__main__':
